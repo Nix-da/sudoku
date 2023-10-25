@@ -14,10 +14,28 @@ font = pygame.font.SysFont("calibri", 20)
 grid = np.zeros((9, 9))
 
 
+def draw():
+    dif = 500 / 9
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] != 0:
+                pygame.draw.rect(screen, (0, 153, 153), (i * dif, j * dif, dif + 1, dif + 1))
+
+    for i in range(10):
+        if i % 3 == 0:
+            thick = 7
+        else:
+            thick = 1
+        pygame.draw.line(screen, (0, 0, 0), (0, i * dif), (500, i * dif), thick)
+        pygame.draw.line(screen, (0, 0, 0), (i * dif, 0), (i * dif, 500), thick)
+
+
 run = True
 
 while run:
     screen.fill((229, 229, 229))
+
+    draw()
     pygame.display.update()
 
 pygame.quit()
