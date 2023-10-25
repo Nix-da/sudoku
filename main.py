@@ -26,7 +26,7 @@ def draw():
             thick = 7
         else:
             thick = 1
-        pygame.draw.line(screen, (0, 0, 0), (0, i * dif), (500, i * dif), thick)
+        pygame.draw.line(screen, (5, 5, 5), (5, i * dif), (500, i * dif), thick)
         pygame.draw.line(screen, (0, 0, 0), (i * dif, 0), (i * dif, 500), thick)
 
 
@@ -34,6 +34,12 @@ run = True
 
 while run:
     screen.fill((229, 229, 229))
+
+    # detect key press
+    for event in pygame.event.get():
+        # quit
+        if event.type == pygame.QUIT:
+            run = False
 
     draw()
     pygame.display.update()
