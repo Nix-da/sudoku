@@ -8,7 +8,7 @@ sudoku_segment_count = 3
 sudoku_grid_count = sudoku_segment_count ** 2
 sudoku_cell_size = 50
 sudoku_cell_line = 1
-sudoku_cell_border = 5
+sudoku_cell_border = 2
 sudoku_cell_highlight = 3
 sudoku_offset = 40
 
@@ -19,7 +19,7 @@ window_width = sudoku_width + 2 * sudoku_offset
 window_height = 1.1 * sudoku_height + 2 * sudoku_offset
 
 # empty sudoku
-grid = np.ones((sudoku_grid_count, sudoku_grid_count))
+grid = np.zeros((sudoku_grid_count, sudoku_grid_count))
 
 pygame.font.init()
 screen = pygame.display.set_mode((window_width, window_height))
@@ -31,17 +31,59 @@ font = pygame.font.SysFont("calibri", 20)
 
 
 def draw():
+    # draw border
+    start_coord = (
+        sudoku_offset,
+        sudoku_offset
+    )
+    dimensions = (
+        sudoku_cell_size * sudoku_grid_count,
+        sudoku_cell_size * sudoku_grid_count
+    )
+    pygame.draw.rect(
+        screen,
+        (0, 0, 0),
+        (start_coord, dimensions),
+        sudoku_cell_border * 2
+    )
+
+    # draw segments
+    for i in range(sudoku_segment_count):
+        for j in range(sudoku_segment_count):
+            start_coord = (
+                sudoku_offset + i * sudoku_cell_size * sudoku_segment_count,
+                sudoku_offset + j * sudoku_cell_size * sudoku_segment_count
+            )
+            dimensions = (
+                sudoku_cell_size * 3,
+                sudoku_cell_size * 3
+            )
+            pygame.draw.rect(
+                screen,
+                (0, 0, 0),
+                (start_coord, dimensions),
+                sudoku_cell_border
+            )
+
+    # draw small cells
     for i in range(sudoku_grid_count):
         for j in range(sudoku_grid_count):
-            if grid[i][j] != 0:
-                pygame.draw.rect(
-                    screen,
-                    (0, 0, 0),
-                    (i * sudoku_cell_size, j * sudoku_cell_size, sudoku_cell_size + 1, sudoku_cell_size + 1),
-                    1
-                )
-                #text1 = font.render(str(grid[i][j]), 1, (0, 0, 0))
-                #screen.blit(text1, (i * sudoku_cell_size + sudoku_offset, j * sudoku_cell_size + sudoku_offset))
+            start_coord = (
+                sudoku_offset + i * sudoku_cell_size,
+                sudoku_offset + j * sudoku_cell_size
+            )
+            dimensions = (
+                sudoku_cell_size,
+                sudoku_cell_size
+            )
+            pygame.draw.rect(
+                screen,
+                (0, 0, 0),
+                (start_coord, dimensions),
+                1
+            )
+            text = font.render(str(grid[i][j]), 1, (0, 0, 0))
+            screen.blit(text, (i * sudoku_cell_size + sudoku_offset + 10, j * sudoku_cell_size + sudoku_offset + 10))
 
 
 run = True
