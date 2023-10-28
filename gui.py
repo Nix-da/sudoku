@@ -34,11 +34,11 @@ class Sudoku_user_interface():
         pygame.display.set_caption("sudoku solver")
         # img = pygame.image.load('icon.png')
         # pygame.display.set_icon(img)
-        self.font_original = pygame.font.SysFont("calibri", 35)
+
         self.font_solution = pygame.font.SysFont("calibri", 35)
-        self.font_selected = pygame.font.SysFont("calibri", 35, bold=True)
-        self.font_observed = pygame.font.SysFont("calibri", 35)
-        self.font_possible = pygame.font.SysFont("calibri", 7)
+        self.font_original = pygame.font.SysFont("calibri", 35)
+        self.font_possible = pygame.font.SysFont("calibri", 15)
+
 
     def quit(self):
         pygame.quit()
@@ -83,8 +83,8 @@ class Sudoku_user_interface():
                     self.sudoku_offset + j * self.sudoku_cell_size * self.sudoku.segment_count
                 )
                 dimensions = (
-                    self.sudoku_cell_size * 3,
-                    self.sudoku_cell_size * 3
+                    self.sudoku_cell_size * self.sudoku.segment_count,
+                    self.sudoku_cell_size * self.sudoku.segment_count
                 )
                 pygame.draw.rect(
                     self.screen,
@@ -112,20 +112,47 @@ class Sudoku_user_interface():
         # write numbers
         for i in range(self.sudoku.grid_count):
             for j in range(self.sudoku.grid_count):
+                # write original
                 if not self.sudoku.original_sudoku[i][j] == 0:
-                    text = self.font_original.render(str(self.sudoku.original_sudoku[i][j]), 1, self.original_color)
+                    text = self.font_original.render(
+                        str(int(self.sudoku.original_sudoku[i][j])),
+                        True,
+                        self.original_color
+                    )
                     self.screen.blit(
                         text,
                         (i * self.sudoku_cell_size + self.sudoku_offset + 16,
                          j * self.sudoku_cell_size + self.sudoku_offset + 9)
                     )
+
+                # write solutions
                 if not self.sudoku.solutions_sudoku[i][j] == 0:
-                    text = self.font_solution.render(str(self.sudoku.original_sudoku[i][j]), 1, self.solutions_color)
+                    text = self.font_solution.render(
+                        str(int(self.sudoku.solutions_sudoku[i][j])),
+                        True,
+                        self.solutions_color
+                    )
                     self.screen.blit(
                         text,
                         (i * self.sudoku_cell_size + self.sudoku_offset + 16,
                          j * self.sudoku_cell_size + self.sudoku_offset + 9)
                     )
+
+                # write possibilities
+                for n in range(self.sudoku.segment_count):
+                    for m in range(self.sudoku.segment_count):
+                        if not self.sudoku.possibilities_sudoku[i][j][n * self.sudoku.segment_count + m] == 0:
+                            text = self.font_possible.render(
+                                str(int(self.sudoku.possibilities_sudoku[i][j][n * self.sudoku.segment_count + m])),
+                                True,
+                                self.possibilities_color
+                            )
+                            self.screen.blit(
+                                text,
+                                (i * self.sudoku_cell_size + self.sudoku_offset + 6 + n * 14,
+                                 j * self.sudoku_cell_size + self.sudoku_offset + 6 + m * 14)
+                            )
+
 
     def update(self):
         self.screen.fill((229, 229, 229))

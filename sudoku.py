@@ -31,11 +31,11 @@ class Sudoku:
         )
         self.solutions_sudoku[0][0] = 1
         self.possibilities_sudoku[1][0][0] = 1
-        self.possibilities_sudoku[1][0][0] = 2
-        self.possibilities_sudoku[1][0][0] = 3
-        self.possibilities_sudoku[1][0][0] = 4
-        self.possibilities_sudoku[1][0][0] = 5
-        self.possibilities_sudoku[1][0][0] = 6
-        self.possibilities_sudoku[1][0][0] = 7
-        self.possibilities_sudoku[1][0][0] = 8
-        self.possibilities_sudoku[1][0][0] = 9
+        self.possibilities_sudoku[1][0][1] = 2
+        self.possibilities_sudoku[1][0][2] = 3
+        self.possibilities_sudoku[1][0][3] = 4
+        self.possibilities_sudoku[1][0][4] = 5
+        self.possibilities_sudoku[1][0][5] = 6
+        self.possibilities_sudoku[1][0][6] = 7
+        self.possibilities_sudoku[1][0][7] = 8
+        self.possibilities_sudoku[1][0][8] = 9
