@@ -55,6 +55,19 @@ class Sudoku_user_interface():
                     self.sudoku_cell_size,
                     self.sudoku_cell_size
                 )
+
+                if (i, j) in self.sudoku.observations:
+                    pygame.draw.rect(
+                        self.screen,
+                        self.observation_bckgr_color,
+                        (start_coord, dimensions)
+                    )
+                if (i, j) == self.sudoku.selected:
+                    pygame.draw.rect(
+                        self.screen,
+                        self.selected_bckgr_color,
+                        (start_coord, dimensions)
+                    )
                 pygame.draw.rect(
                     self.screen,
                     self.line_color,
