@@ -9,8 +9,8 @@ class Sudoku:
     solutions_sudoku = np.zeros(shape=(grid_count, grid_count))
     possibilities_sudoku = np.zeros(shape=(grid_count, grid_count, grid_count))
 
-    selected = (0, 0)
-    observations = [(0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7), (0, 8), (0, 9)]
+    selected = None
+    observations = []
 
     def __init__(self):
         self.read_sudoku_from_file("")
@@ -29,13 +29,3 @@ class Sudoku:
                 [0, 0, 0, 3, 0, 0, 0, 0, 0],
             ]
         )
-        self.solutions_sudoku[0][0] = 1
-        self.possibilities_sudoku[1][0][0] = 1
-        self.possibilities_sudoku[1][0][1] = 2
-        self.possibilities_sudoku[1][0][2] = 3
-        self.possibilities_sudoku[1][0][3] = 4
-        self.possibilities_sudoku[1][0][4] = 5
-        self.possibilities_sudoku[1][0][5] = 6
-        self.possibilities_sudoku[1][0][6] = 7
-        self.possibilities_sudoku[1][0][7] = 8
-        self.possibilities_sudoku[1][0][8] = 9
