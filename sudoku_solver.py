@@ -22,13 +22,12 @@ class SudokuSolver:
             else:
                 x = self.sudoku.selected[0]
                 y = self.sudoku.selected[1]
-                coord_sum = x + y
-                new_coord_sum = (coord_sum + 1) % self.sudoku.grid_count ** 2
-                x = new_coord_sum // self.sudoku.segment_count
-                y = new_coord_sum % self.sudoku.segment_count
-                self.sudoku.selected = (x, y)
+                new_coord_sum = (x * self.sudoku.grid_count + y + 1) % (self.sudoku.grid_count ** 2)
+                self.sudoku.selected = (new_coord_sum // self.sudoku.grid_count, new_coord_sum % self.sudoku.grid_count)
             if not self.total_sudoku[self.sudoku.selected] == 0:
                 self.sudoku.observations = self.find_all_numbers(self.total_sudoku[self.sudoku.selected])
+            else:
+                self.sudoku.observations = []
             return True
 
         return False

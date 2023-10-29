@@ -12,7 +12,7 @@ class Sudoku_user_interface():
     solutions_color = (50, 90, 175)
     possibilities_color = (110, 124, 140)
     selected_bckgr_color = (187, 222, 251)
-    observation_bckgr_color = (226, 235, 243)
+    observation_bckgr_color = (216, 225, 233)
 
 
     def __init__(self, sudoku):
