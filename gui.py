@@ -157,13 +157,17 @@ class Sudoku_user_interface():
     def update(self):
         self.screen.fill((229, 229, 229))
 
+        key_press_event = "nothing"
         # detect key press
         for event in pygame.event.get():
             # quit
             if event.type == pygame.QUIT:
-                return False
+                key_press_event = "Quit"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    key_press_event = "scan field"
 
         self.draw()
         pygame.display.update()
 
-        return True
+        return key_press_event
