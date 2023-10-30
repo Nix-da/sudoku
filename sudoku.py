@@ -10,6 +10,7 @@ class Sudoku:
     possibilities_sudoku = np.zeros(shape=(grid_count, grid_count, grid_count))
 
     selected = None
+    selected_number = 0
     observations = []
 
     def __init__(self):

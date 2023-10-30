@@ -26,8 +26,10 @@ class SudokuSolver:
                 self.sudoku.selected = (new_coord_sum // self.sudoku.grid_count, new_coord_sum % self.sudoku.grid_count)
             if not self.total_sudoku[self.sudoku.selected] == 0:
                 self.sudoku.observations = self.find_all_numbers(self.total_sudoku[self.sudoku.selected])
+                self.sudoku.selected_number = self.total_sudoku[self.sudoku.selected[0]][self.sudoku.selected[1]]
             else:
                 self.sudoku.observations = []
+                self.sudoku.selected_number = 0
             return True
 
         return False
