@@ -194,6 +194,18 @@ class Sudoku_user_interface():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_2:
                     key_press_event = "fill possibilities"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    key_press_event = "up"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    key_press_event = "down"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    key_press_event = "left"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    key_press_event = "right"
 
         self.draw()
         pygame.display.update()
