@@ -27,6 +27,7 @@ class Sudoku_user_interface():
         self.window_width = self.sudoku_width + 2 * self.sudoku_offset
         self.window_height = 1.1 * self.sudoku_height + 2 * self.sudoku_offset
 
+        pygame.font.init()
         self.font_possible_selected = pygame.font.SysFont("calibri", 15, bold=True)
         self.font_possible = pygame.font.SysFont("calibri", 15)
         self.font_original_selected = pygame.font.SysFont("calibri", 35, bold=True)
@@ -35,7 +36,6 @@ class Sudoku_user_interface():
         self.font_solution_selected = pygame.font.SysFont("calibri", 35, bold=True)
 
     def open(self):
-        pygame.font.init()
         self.screen = pygame.display.set_mode((self.window_width, self.window_height))
 
         pygame.display.set_caption("sudoku solver")
