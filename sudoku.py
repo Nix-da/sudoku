@@ -95,12 +95,48 @@ class Sudoku:
     def get_selected_coord(self):
         return self.__selected
 
+    def get_row(self, position):
+        coord = self.__get_coord_from_position(position)
+        row = []
+        row_index = []
+        for i in range(self.__grid_count):
+            row.append(self.__total_sudoku[coord[0]][i])
+            row_index.append((coord[0], i))
+        return row, row_index
+
+    def get_col(self, position):
+        coord = self.__get_coord_from_position(position)
+        col = []
+        col_index = []
+        for i in range(self.__grid_count):
+            col.append(self.__total_sudoku[coord[1]][i])
+            col_index.append((i, coord[1]))
+        return col, col_index
+
+    def get_segment(self, position):
+        coord = self.__get_coord_from_position(position)
+        segment = []
+        segment_index = []
+        x_from = self.__segment_count * (coord[0] // self.__segment_count)
+        x_to = x_from + self.__segment_count
+        y_from = self.__segment_count * (coord[1] // self.__segment_count)
+        y_to = y_from + self.__segment_count
+        for i in range(x_from, x_to):
+            for j in range(y_from, y_to):
+                segment.append(self.__total_sudoku[i][j])
+                segment_index.append((i, j))
+        return segment, segment_index
+
     # select a field at the given position
     def select(self, position) -> int:
         coord = self.__get_coord_from_position(position)
         self.__selected = coord
         self.__selected_number = self.get_number(coord)
         return self.__selected_number
+
+    def set_possibilities(self, position, possibilities):
+        coord = self.__get_coord_from_position(position)
+        self.__possibilities_sudoku[coord[0]][coord[1]] = possibilities
 
     # set the value of a field at the given position
     def set_value(self, position: Union[int, Tuple[int, int]], value: int):
