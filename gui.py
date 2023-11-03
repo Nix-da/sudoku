@@ -174,8 +174,8 @@ class Sudoku_user_interface():
 
                             self.screen.blit(
                                 text,
-                                (i * self.sudoku_cell_size + self.sudoku_offset + 6 + n * 14,
-                                 j * self.sudoku_cell_size + self.sudoku_offset + 6 + m * 14)
+                                (i * self.sudoku_cell_size + self.sudoku_offset + 7 + n * 14,
+                                 j * self.sudoku_cell_size + self.sudoku_offset + 7 + m * 14)
                             )
 
 
