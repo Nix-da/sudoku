@@ -98,9 +98,6 @@ class SudokuSolver:
         # validation
 
         # automation
-        if action == "scan field":
-            self.scan_field()
-            return True
         if action == "fill possibilities":
             self.fill_possibilities()
             return True
