@@ -3,6 +3,7 @@ from sudoku_solver import SudokuSolver
 from gui import Sudoku_user_interface
 
 sudoku = Sudoku()
+sudoku.read_sudoku_from_file("")
 sudoku_solver = SudokuSolver(sudoku)
 gui = Sudoku_user_interface(sudoku)
 gui.open()
