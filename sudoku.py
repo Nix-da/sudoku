@@ -109,22 +109,22 @@ class Sudoku:
         return self.__selected
 
     # get current row, values at index 0, coordinates at index 1
-    def get_row(self, position):
+    def get_col(self, position):
         coord = self.__get_coord_from_position(position)
         row = []
         row_index = []
         for i in range(self.__grid_count):
-            row.append(self.__total_sudoku[i][coord[0]])
+            row.append(self.__total_sudoku[coord[0]][i])
             row_index.append((coord[0], i))
         return row, row_index
 
     # get current column, values at index 0, coordinates at index 1
-    def get_col(self, position):
+    def get_row(self, position):
         coord = self.__get_coord_from_position(position)
         col = []
         col_index = []
         for i in range(self.__grid_count):
-            col.append(self.__total_sudoku[coord[1]][i])
+            col.append(self.__total_sudoku[i][coord[1]])
             col_index.append((i, coord[1]))
         return col, col_index
 
