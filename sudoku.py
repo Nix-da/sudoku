@@ -38,6 +38,7 @@ class Sudoku:
                 [0, 0, 0, 3, 0, 0, 0, 0, 0],
             ]
         )
+        self.__total_sudoku = self.__original_sudoku
 
     # calculates the (x, y) coordinate of the collapsed array index
     def coord_from_index(self, index: int) -> Tuple[int, int]:
