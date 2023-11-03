@@ -188,9 +188,8 @@ class Sudoku_user_interface():
             # quit
             if event.type == pygame.QUIT:
                 key_press_event = "Quit"
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    key_press_event = "fill possibilities"
+
+            # navigation
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     key_press_event = "up"
@@ -203,6 +202,14 @@ class Sudoku_user_interface():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     key_press_event = "right"
+
+            # automation
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    key_press_event = "fill possibilities"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w:
+                    key_press_event = "fill all possibilities"
 
         self.draw()
         pygame.display.update()
