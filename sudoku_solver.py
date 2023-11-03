@@ -22,15 +22,30 @@ class SudokuSolver:
             self.sudoku.select(next_position)
         if not self.sudoku.get_selected_number() == 0:
             self.sudoku.observations = self.find_all_numbers(self.sudoku.get_selected_number())
-            self.sudoku.observations += (self.sudoku.get_row(self.sudoku.get_selected_coord())[1])
-            self.sudoku.observations += (self.sudoku.get_col(self.sudoku.get_selected_coord())[1])
-            self.sudoku.observations += (self.sudoku.get_segment(self.sudoku.get_selected_coord())[1])
+            self.sudoku.observations += self.sudoku.get_row(self.sudoku.get_selected_coord())[1]
+            self.sudoku.observations += self.sudoku.get_col(self.sudoku.get_selected_coord())[1]
+            self.sudoku.observations += self.sudoku.get_segment(self.sudoku.get_selected_coord())[1]
         else:
             self.sudoku.observations = []
 
     def fill_possibilities(self):
         if self.sudoku.get_number(self.sudoku.get_selected_coord()) == 0:
-            self.sudoku.set_possibilities(self.sudoku.get_selected_coord(), [1,2,3,4,5,6,7,8,9])
+
+            self.sudoku.observations = self.sudoku.get_row(self.sudoku.get_selected_coord())[1]
+            self.sudoku.observations += self.sudoku.get_col(self.sudoku.get_selected_coord())[1]
+            self.sudoku.observations += self.sudoku.get_segment(self.sudoku.get_selected_coord())[1]
+
+            observed_numbers = self.sudoku.get_row(self.sudoku.get_selected_coord())[0]
+            observed_numbers += self.sudoku.get_col(self.sudoku.get_selected_coord())[0]
+            observed_numbers += self.sudoku.get_segment(self.sudoku.get_selected_coord())[0]
+
+            possibilities = self.sudoku.numbers
+
+            for i in range(len(possibilities)):
+                if possibilities[i] in observed_numbers:
+                    possibilities[i] = 0
+
+            self.sudoku.set_possibilities(self.sudoku.get_selected_coord(), possibilities)
 
     def solve(self, action):
         if action == "nothing":
