@@ -17,10 +17,10 @@ class Sudoku_user_interface():
 
     def __init__(self, sudoku):
         self.sudoku = sudoku
-        self.sudoku_width = self.sudoku.grid_count * self.sudoku_cell_size + \
+        self.sudoku_width = self.sudoku.get_grid_count() * self.sudoku_cell_size + \
                             6 * self.sudoku_cell_line + \
                             4 * self.sudoku_cell_border
-        self.sudoku_height = self.sudoku.grid_count * self.sudoku_cell_size + \
+        self.sudoku_height = self.sudoku.get_grid_count() * self.sudoku_cell_size + \
                              6 * self.sudoku_cell_line + \
                              4 * self.sudoku_cell_border
 
@@ -48,8 +48,8 @@ class Sudoku_user_interface():
 
     def draw(self):
         # draw small cells
-        for i in range(self.sudoku.grid_count):
-            for j in range(self.sudoku.grid_count):
+        for i in range(self.sudoku.get_grid_count()):
+            for j in range(self.sudoku.get_grid_count()):
                 start_coord = (
                     self.sudoku_offset + i * self.sudoku_cell_size,
                     self.sudoku_offset + j * self.sudoku_cell_size
@@ -65,7 +65,7 @@ class Sudoku_user_interface():
                         self.observation_bckgr_color,
                         (start_coord, dimensions)
                     )
-                if (i, j) == self.sudoku.selected:
+                if (i, j) == self.sudoku.get_selected_coord():
                     pygame.draw.rect(
                         self.screen,
                         self.selected_bckgr_color,
@@ -79,15 +79,15 @@ class Sudoku_user_interface():
                 )
 
         # draw segments
-        for i in range(self.sudoku.segment_count):
-            for j in range(self.sudoku.segment_count):
+        for i in range(self.sudoku.get_segment_count()):
+            for j in range(self.sudoku.get_segment_count()):
                 start_coord = (
-                    self.sudoku_offset + i * self.sudoku_cell_size * self.sudoku.segment_count,
-                    self.sudoku_offset + j * self.sudoku_cell_size * self.sudoku.segment_count
+                    self.sudoku_offset + i * self.sudoku_cell_size * self.sudoku.get_segment_count(),
+                    self.sudoku_offset + j * self.sudoku_cell_size * self.sudoku.get_segment_count()
                 )
                 dimensions = (
-                    self.sudoku_cell_size * self.sudoku.segment_count,
-                    self.sudoku_cell_size * self.sudoku.segment_count
+                    self.sudoku_cell_size * self.sudoku.get_segment_count(),
+                    self.sudoku_cell_size * self.sudoku.get_segment_count()
                 )
                 pygame.draw.rect(
                     self.screen,
@@ -102,8 +102,8 @@ class Sudoku_user_interface():
             self.sudoku_offset
         )
         dimensions = (
-            self.sudoku_cell_size * self.sudoku.grid_count,
-            self.sudoku_cell_size * self.sudoku.grid_count
+            self.sudoku_cell_size * self.sudoku.get_grid_count(),
+            self.sudoku_cell_size * self.sudoku.get_grid_count()
         )
         pygame.draw.rect(
             self.screen,
@@ -113,19 +113,19 @@ class Sudoku_user_interface():
         )
 
         # write numbers
-        for i in range(self.sudoku.grid_count):
-            for j in range(self.sudoku.grid_count):
+        for i in range(self.sudoku.get_grid_count()):
+            for j in range(self.sudoku.get_grid_count()):
                 # write original
-                if not self.sudoku.original_sudoku[i][j] == 0:
-                    if self.sudoku.selected_number == self.sudoku.original_sudoku[i][j]:
+                if not self.sudoku.get_original_sudoku()[i][j] == 0:
+                    if self.sudoku.get_selected_number() == self.sudoku.get_original_sudoku()[i][j]:
                         text = self.font_original_selected.render(
-                            str(int(self.sudoku.original_sudoku[i][j])),
+                            str(int(self.sudoku.get_original_sudoku()[i][j])),
                             True,
                             self.original_color
                         )
                     else:
                         text = self.font_original.render(
-                            str(int(self.sudoku.original_sudoku[i][j])),
+                            str(int(self.sudoku.get_original_sudoku()[i][j])),
                             True,
                             self.original_color
                         )
@@ -137,16 +137,16 @@ class Sudoku_user_interface():
                     )
 
                 # write solutions
-                if not self.sudoku.solutions_sudoku[i][j] == 0:
-                    if self.sudoku.selected_number == self.sudoku.solutions_sudoku[i][j]:
+                if not self.sudoku.get_solutions_sudoku()[i][j] == 0:
+                    if self.sudoku.get_selected_number() == self.sudoku.get_solutions_sudoku()[i][j]:
                         text = self.font_solution_selected.render(
-                            str(int(self.sudoku.solutions_sudoku[i][j])),
+                            str(int(self.sudoku.get_solutions_sudoku()[i][j])),
                             True,
                             self.original_color
                         )
                     else:
                         text = self.font_original.render(
-                            str(int(self.sudoku.solutions_sudoku[i][j])),
+                            str(int(self.sudoku.get_solutions_sudoku()[i][j])),
                             True,
                             self.original_color
                         )
@@ -157,18 +157,18 @@ class Sudoku_user_interface():
                     )
 
                 # write possibilities
-                for n in range(self.sudoku.segment_count):
-                    for m in range(self.sudoku.segment_count):
-                        if not self.sudoku.possibilities_sudoku[i][j][n * self.sudoku.segment_count + m] == 0:
-                            if self.sudoku.selected_number == self.sudoku.possibilities_sudoku[i][j][n * self.sudoku.segment_count + m]:
+                for n in range(self.sudoku.get_segment_count()):
+                    for m in range(self.sudoku.get_segment_count()):
+                        if not self.sudoku.get_possibilities_sudoku()[i][j][n * self.sudoku.get_segment_count() + m] == 0:
+                            if self.sudoku.get_selected_number() == self.sudoku.get_possibilities_sudoku()[i][j][n * self.sudoku.get_segment_count() + m]:
                                 text = self.font_possible_selected.render(
-                                    str(int(self.sudoku.possibilities_sudoku[i][j][n * self.sudoku.segment_count + m])),
+                                    str(int(self.sudoku.get_possibilities_sudoku()[i][j][n * self.sudoku.get_segment_count() + m])),
                                     True,
                                     self.possibilities_color
                                 )
                             else:
                                 text = self.font_possible.render(
-                                    str(int(self.sudoku.possibilities_sudoku[i][j][n * self.sudoku.segment_count + m])),
+                                    str(int(self.sudoku.get_possibilities_sudoku()[i][j][n * self.sudoku.get_segment_count() + m])),
                                     True,
                                     self.possibilities_color
                                 )

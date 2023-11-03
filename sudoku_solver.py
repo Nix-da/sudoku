@@ -1,13 +1,13 @@
 import numpy as np
 
+
 class SudokuSolver:
 
     def __init__(self, sudoku):
         self.sudoku = sudoku
-        self.total_sudoku = sudoku.original_sudoku + sudoku.solutions_sudoku
 
     def find_all_numbers(self, number):
-        findings = np.where(self.total_sudoku == number)
+        findings = np.where(self.sudoku.get_total_sudoku() == number)
         coords = []
         for i in range(len(findings[0])):
             coords.append((findings[0][i], findings[1][i]))
@@ -17,19 +17,17 @@ class SudokuSolver:
         if action == "nothing":
             return True
         if action == "scan field":
-            if self.sudoku.selected is None:
-                self.sudoku.selected = (0, 0)
+            if self.sudoku.get_selected_coord() is None:
+                self.sudoku.select((0, 0))
             else:
-                x = self.sudoku.selected[0]
-                y = self.sudoku.selected[1]
-                new_coord_sum = (x * self.sudoku.grid_count + y + 1) % (self.sudoku.grid_count ** 2)
-                self.sudoku.selected = (new_coord_sum // self.sudoku.grid_count, new_coord_sum % self.sudoku.grid_count)
-            if not self.total_sudoku[self.sudoku.selected] == 0:
-                self.sudoku.observations = self.find_all_numbers(self.total_sudoku[self.sudoku.selected])
-                self.sudoku.selected_number = self.total_sudoku[self.sudoku.selected[0]][self.sudoku.selected[1]]
+                current_coord = self.sudoku.get_selected_coord()
+                next_position = 1 + self.sudoku.index_from_coord(current_coord)
+                self.sudoku.select(next_position)
+            if not self.sudoku.get_selected_number() == 0:
+                self.sudoku.observations = self.find_all_numbers(self.sudoku.get_selected_number())
             else:
                 self.sudoku.observations = []
-                self.sudoku.selected_number = 0
+                # self.sudoku.selected_number = 0
             return True
 
         return False
