@@ -143,6 +143,13 @@ class Sudoku:
                 segment_index.append((i, j))
         return segment, segment_index
 
+    # get current row, col and segment, values at index 0, coordinates at index 1
+    def get_relevant_elements(self, position):
+        rows = self.get_row(position)
+        cols = self.get_col(position)
+        segments = self.get_segment(position)
+        return rows[0] + cols[0] + segments[0], rows[1] + cols[1] + segments[1]
+
     # select a field at the given position
     def select(self, position) -> int:
         coord = self.__get_coord_from_position(position)
@@ -161,5 +168,9 @@ class Sudoku:
 
         self.__solutions_sudoku[coord[0]][coord[1]] = value
         self.__total_sudoku[coord[0]][coord[1]] = value
-        self.__solutions_sudoku[coord[0]][coord[1]] = 0  # np.zeros(self.__grid_count)
+
+        # remove all possibilities in this row, col and segment
+        for possibility_coord in self.get_relevant_elements(coord)[1]:
+            self.get_possibilities_sudoku()[possibility_coord[0]][possibility_coord[1]][int(value) - 1] = 0
+
         return coord
