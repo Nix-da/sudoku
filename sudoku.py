@@ -169,8 +169,11 @@ class Sudoku:
         self.__solutions_sudoku[coord[0]][coord[1]] = value
         self.__total_sudoku[coord[0]][coord[1]] = value
 
-        # remove all possibilities in this row, col and segment
+        # remove all occurrences of the number in the possibilities in this row, col and segment
         for possibility_coord in self.get_relevant_elements(coord)[1]:
             self.get_possibilities_sudoku()[possibility_coord[0]][possibility_coord[1]][int(value) - 1] = 0
+
+        # remove all possibilities of the now filled field
+            self.get_possibilities_sudoku()[coord[0]][coord[1]] = np.zeros(shape=(self.__grid_count))
 
         return coord

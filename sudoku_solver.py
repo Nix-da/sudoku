@@ -71,10 +71,43 @@ class SudokuSolver:
             self.down()
 
     def apply_possibility(self):
+        # if there is only one option left in the cell
         possibilities = set(self.sudoku.get_possibilities(self.sudoku.get_selected_coord()))
         if len(possibilities) == 2:
             possibilities.remove(0)
             self.sudoku.set_value(self.sudoku.get_selected_coord(), possibilities.pop())
+
+        # if there is only one option left in the segment
+        possibilities = []
+        segment_coords = self.sudoku.get_segment(self.sudoku.get_selected_coord())[1]
+        for segment_coord in segment_coords:
+            possibilities += list(self.sudoku.get_possibilities(segment_coord))
+
+        for number in self.sudoku.numbers:
+            if possibilities.count(number) == 1:
+                self.sudoku.set_value(segment_coords[int(possibilities.index(number) // self.sudoku.get_grid_count())], number)
+
+        # if there is only one option left in the row
+        possibilities = []
+        row_coords = self.sudoku.get_row(self.sudoku.get_selected_coord())[1]
+        for row_coord in row_coords:
+            possibilities += list(self.sudoku.get_possibilities(row_coord))
+
+        for number in self.sudoku.numbers:
+            if possibilities.count(number) == 1:
+                self.sudoku.set_value(row_coords[int(possibilities.index(number) // self.sudoku.get_grid_count())],
+                                      number)
+
+        # if there is only one option left in the col
+        possibilities = []
+        col_coords = self.sudoku.get_col(self.sudoku.get_selected_coord())[1]
+        for col_coord in col_coords:
+            possibilities += list(self.sudoku.get_possibilities(col_coord))
+
+        for number in self.sudoku.numbers:
+            if possibilities.count(number) == 1:
+                self.sudoku.set_value(col_coords[int(possibilities.index(number) // self.sudoku.get_grid_count())],
+                                      number)
 
     def solve(self, action):
         # default
