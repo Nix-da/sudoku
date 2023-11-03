@@ -13,6 +13,33 @@ class SudokuSolver:
             coords.append((findings[0][i], findings[1][i]))
         return coords
 
+    def up(self):
+        self.__navigate(-1)
+
+    def down(self):
+        self.__navigate(1)
+
+    def left(self):
+        self.__navigate(-self.sudoku.get_grid_count())
+
+    def right(self):
+        self.__navigate(self.sudoku.get_grid_count())
+
+    def __navigate(self, step):
+        if self.sudoku.get_selected_coord() is None:
+            self.sudoku.select((0, 0))
+        else:
+            current_coord = self.sudoku.get_selected_coord()
+            next_position = (self.sudoku.index_from_coord(current_coord) + step) % self.sudoku.get_grid_count() ** 2
+            self.sudoku.select(next_position)
+        if not self.sudoku.get_selected_number() == 0:
+            self.sudoku.observations = self.find_all_numbers(self.sudoku.get_selected_number())
+            self.sudoku.observations += self.sudoku.get_row(self.sudoku.get_selected_coord())[1]
+            self.sudoku.observations += self.sudoku.get_col(self.sudoku.get_selected_coord())[1]
+            self.sudoku.observations += self.sudoku.get_segment(self.sudoku.get_selected_coord())[1]
+        else:
+            self.sudoku.observations = []
+
     def scan_field(self):
         if self.sudoku.get_selected_coord() is None:
             self.sudoku.select((0, 0))
@@ -48,8 +75,29 @@ class SudokuSolver:
             self.sudoku.set_possibilities(self.sudoku.get_selected_coord(), possibilities)
 
     def solve(self, action):
+        # default action
         if action == "nothing":
             return True
+
+        # navigation
+        if action == "up":
+            self.up()
+            return True
+        if action == "down":
+            self.down()
+            return True
+        if action == "left":
+            self.left()
+            return True
+        if action == "right":
+            self.right()
+            return True
+
+        # interaction
+
+        # validation
+
+        # automation
         if action == "scan field":
             self.scan_field()
             return True
