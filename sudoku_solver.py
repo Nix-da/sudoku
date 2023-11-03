@@ -136,7 +136,7 @@ class SudokuSolver:
             self.apply_possibility()
             return True
         if action == "apply all possibilities":
-            self.apply_all_possibility()
+            self.apply_all_possibilities()
             return True
 
         return False
