@@ -24,9 +24,7 @@ class Sudoku:
         self.observations = []
 
         # initialize the numbers
-        self.number_indexes = [x for x in range(self.__grid_count)]
         self.numbers = [x for x in range(1, self.__grid_count + 1)]
-        self.numbers = dict(map(lambda i, j: (i, j), self.number_indexes, self.numbers))
 
     # reads a sudoku from a text file
     def read_sudoku_from_file(self, file):
@@ -96,19 +94,31 @@ class Sudoku:
 
         return self.__total_sudoku[coord[0]][coord[1]]
 
+    # get number of the currently selected field
+    def get_selected_possibilities(self) -> int:
+        return self.__possibilities_sudoku[self.__selected[0]][[self.__selected[1]]]
+
+    # get number of a field at the given position
+    def get_possibilities(self, position: Union[int, Tuple[int, int]]) -> int:
+        coord = self.__get_coord_from_position(position)
+
+        return self.__possibilities_sudoku[coord[0]][coord[1]]
+
     # get the currently selected coordinate
     def get_selected_coord(self):
         return self.__selected
 
+    # get current row, values at index 0, coordinates at index 1
     def get_row(self, position):
         coord = self.__get_coord_from_position(position)
         row = []
         row_index = []
         for i in range(self.__grid_count):
-            row.append(self.__total_sudoku[coord[0]][i])
+            row.append(self.__total_sudoku[i][coord[0]])
             row_index.append((coord[0], i))
         return row, row_index
 
+    # get current column, values at index 0, coordinates at index 1
     def get_col(self, position):
         coord = self.__get_coord_from_position(position)
         col = []
@@ -118,6 +128,7 @@ class Sudoku:
             col_index.append((i, coord[1]))
         return col, col_index
 
+    # get current segment, values at index 0, coordinates at index 1
     def get_segment(self, position):
         coord = self.__get_coord_from_position(position)
         segment = []
@@ -142,6 +153,7 @@ class Sudoku:
     def set_possibilities(self, position, possibilities):
         coord = self.__get_coord_from_position(position)
         self.__possibilities_sudoku[coord[0]][coord[1]] = possibilities
+        self.numbers = [x for x in range(1, self.__grid_count + 1)]
 
     # set the value of a field at the given position
     def set_value(self, position: Union[int, Tuple[int, int]], value: int):
