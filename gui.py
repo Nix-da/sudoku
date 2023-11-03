@@ -192,6 +192,9 @@ class Sudoku_user_interface():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
                     key_press_event = "scan field"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_2:
+                    key_press_event = "fill possibilities"
 
         self.draw()
         pygame.display.update()
