@@ -21,7 +21,7 @@ class SudokuSolver:
                 self.sudoku.select((0, 0))
             else:
                 current_coord = self.sudoku.get_selected_coord()
-                next_position = 1 + self.sudoku.index_from_coord(current_coord)
+                next_position = (1 + self.sudoku.index_from_coord(current_coord)) % self.sudoku.get_grid_count() ** 2
                 self.sudoku.select(next_position)
             if not self.sudoku.get_selected_number() == 0:
                 self.sudoku.observations = self.find_all_numbers(self.sudoku.get_selected_number())
