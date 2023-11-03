@@ -213,6 +213,9 @@ class Sudoku_user_interface():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_e:
                     key_press_event = "apply possibility"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    key_press_event = "apply all possibilities"
 
         self.draw()
         pygame.display.update()

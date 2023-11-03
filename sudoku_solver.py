@@ -55,19 +55,7 @@ class SudokuSolver:
 
     def fill_all_possibilities(self):
         for i in range(self.sudoku.get_grid_count() ** 2):
-            if self.sudoku.get_number(self.sudoku.get_selected_coord()) == 0:
-
-                self.sudoku.observations = self.sudoku.get_relevant_elements(self.sudoku.get_selected_coord())[1]
-
-                observed_numbers = self.sudoku.get_relevant_elements(self.sudoku.get_selected_coord())[0]
-
-                possibilities = self.sudoku.numbers
-
-                for i in range(len(possibilities)):
-                    if possibilities[i] in observed_numbers:
-                        possibilities[i] = 0
-
-                self.sudoku.set_possibilities(self.sudoku.get_selected_coord(), possibilities)
+            self.fill_possibilities()
             self.down()
 
     def apply_possibility(self):
@@ -109,6 +97,11 @@ class SudokuSolver:
                 self.sudoku.set_value(col_coords[int(possibilities.index(number) // self.sudoku.get_grid_count())],
                                       number)
 
+    def apply_all_possibilities(self):
+        for i in range(self.sudoku.get_grid_count() ** 2):
+            self.apply_possibility()
+            self.down()
+
     def solve(self, action):
         # default
         if action == "nothing":
@@ -141,6 +134,9 @@ class SudokuSolver:
             return True
         if action == "apply possibility":
             self.apply_possibility()
+            return True
+        if action == "apply all possibilities":
+            self.apply_all_possibility()
             return True
 
         return False
