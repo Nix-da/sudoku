@@ -23,6 +23,11 @@ class Sudoku:
         self.__selected_number = 0
         self.observations = []
 
+        # initialize the numbers
+        self.number_indexes = [x for x in range(self.__grid_count)]
+        self.numbers = [x for x in range(1, self.__grid_count + 1)]
+        self.numbers = dict(map(lambda i, j: (i, j), self.number_indexes, self.numbers))
+
     # reads a sudoku from a text file
     def read_sudoku_from_file(self, file):
         self.__original_sudoku = np.array(
