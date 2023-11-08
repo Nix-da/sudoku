@@ -28,19 +28,24 @@ class Sudoku:
 
     # reads a sudoku from a text file
     def read_sudoku_from_file(self, file):
-        self.__original_sudoku = np.array(
-            [
-                [0, 0, 5, 2, 0, 0, 0, 6, 0],
-                [0, 0, 0, 8, 0, 0, 0, 0, 3],
-                [0, 7, 0, 0, 3, 5, 0, 9, 0],
-                [0, 8, 0, 0, 0, 0, 6, 0, 0],
-                [0, 0, 6, 0, 5, 9, 0, 0, 1],
-                [0, 0, 0, 0, 0, 2, 0, 0, 0],
-                [0, 0, 8, 0, 1, 6, 0, 0, 9],
-                [4, 0, 0, 0, 0, 0, 0, 7, 0],
-                [0, 0, 0, 3, 0, 0, 0, 0, 0],
-            ]
-        )
+        sudoku_file = open(file, "r")
+        file_content = sudoku_file.read()
+        file_content = file_content.replace("|", "")
+        file_content = file_content.replace("-", "")
+        file_content = file_content.replace("+", "")
+        file_content = file_content.replace("\n\n", "\n")
+        file_content = file_content.replace("  ", " ")
+        rows = file_content.split("\n")
+        n = rows.pop(0)
+        sudoku = []
+        for row in rows:
+            col = row.split(" ")
+            row_array = []
+            for number_str in col:
+                row_array.append(int(number_str))
+            sudoku.append(row_array)
+
+        self.__original_sudoku = np.array(sudoku)
         self.__total_sudoku = self.__original_sudoku
 
     # calculates the (x, y) coordinate of the collapsed array index

@@ -3,7 +3,7 @@ from sudoku_solver import SudokuSolver
 from gui import Sudoku_user_interface
 
 sudoku = Sudoku()
-sudoku.read_sudoku_from_file("")
+sudoku.read_sudoku_from_file("./data/saved_sudokus/9_hard_001.txt")
 sudoku_solver = SudokuSolver(sudoku)
 gui = Sudoku_user_interface(sudoku)
 gui.open()
